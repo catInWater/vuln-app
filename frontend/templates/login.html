@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Security Vulnerability Lab</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="auth-body">
+
+  <!-- Shared header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="app-title">Security Vulnerability Lab</span>
+      <nav class="logo-row">
+        <img class="header-logo" src="/static/images/PUCIT_Logo.png" alt="PUCIT">
+        <img class="header-logo" src="/static/images/blue-logo-scl2.png" alt="FCCU">
+        <img class="header-logo" src="/static/images/excaliat-logo.png" alt="Excaliat">
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth-split">
+    <!-- Left branding panel -->
+    <section class="auth-brand">
+      <div class="auth-brand-inner">
+        <span class="badge-label">OWASP TOP 10 SECURITY LAB</span>
+        <h1 class="brand-title">Welcome to the<br>Security Vulnerability Lab</h1>
+        <p class="brand-description">
+          An intentionally vulnerable web application built for hands-on security education.
+          Discover, exploit, and analyze real-world attack techniques in a safe environment.
+        </p>
+        <ul class="brand-list">
+          <li>8 deliberate vulnerabilities to discover</li>
+          <li>SQL injection, XSS, and session attacks</li>
+          <li>Step-by-step exploitation guidance</li>
+          <li>Safe and controlled learning environment</li>
+        </ul>
+      </div>
+      <span class="circle circle-1"></span>
+      <span class="circle circle-2"></span>
+      <span class="circle circle-3"></span>
+    </section>
+
+    <!-- Right form panel -->
+    <section class="auth-form-panel">
+      <div class="auth-form-card">
+        <h2 class="form-title">Welcome back</h2>
+        <p class="form-subtitle">Log in to continue to your dashboard</p>
+
+        <div id="error-message" class="error-message" role="alert" hidden></div>
+
+        <form id="login-form" class="auth-form" autocomplete="off">
+          <div class="form-group">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-input" type="text" id="username" name="username" required autofocus>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input class="form-input" type="password" id="password" name="password" required>
+          </div>
+          <button class="btn-primary" type="submit">Login</button>
+        </form>
+
+        <p class="form-alt">Don't have an account? <a class="accent-link" href="/signup">Sign up</a></p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const loginForm = document.getElementById("login-form");
+    const errorBox = document.getElementById("error-message");
+
+    loginForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      errorBox.hidden = true;
+      errorBox.textContent = "";
+
+      try {
+        const response = await fetch("/login", {
+          method: "POST",
+          body: new FormData(loginForm)
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          // The server tells us where to go; JS performs the navigation.
+          window.location.href = data.redirect;
+        } else {
+          // Show the server's error message inline, no page reload.
+          errorBox.textContent = data.error || "Login failed. Please try again.";
+          errorBox.hidden = false;
+        }
+      } catch (err) {
+        errorBox.textContent = "Something went wrong. Please try again.";
+        errorBox.hidden = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+/* ==========================================================================
+   Security Vulnerability Lab — Global Stylesheet
+   Normative source: .claude/specs/app-foundation.md — §5 Visual Design Spec
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   5.1 Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Primary palette */
+  --primary:        #1a237e;
+  --primary-light:  #3949ab;
+  --primary-deep:   #283593;
+  --ink:            #0f172a;
+  --app-bg:         #eef1f8;
+  --surface:        #ffffff;
+
+  /* Text colors */
+  --text-primary:   #1e293b;
+  --text-secondary: #475569;
+  --text-muted:     #64748b;
+  --text-light:     #c5cae9;
+  --accent:         #1a237e;
+
+  /* Typography scale */
+  --font-stack: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --fs-title:   2rem;
+  --fs-section: 1.4rem;
+  --fs-form:    1.7rem;
+  --fs-card:    0.95rem;
+  --fs-body:    0.9rem;
+  --fs-label:   0.82rem;
+  --fs-button:  1rem;
+  --fw-title:   800;
+  --fw-section: 700;
+  --fw-form:    700;
+  --fw-card:    700;
+  --fw-body:    400;
+  --fw-label:   600;
+  --fw-button:  600;
+
+  /* Border radius */
+  --radius-input:  8px;
+  --radius-button: 8px;
+  --radius-card:   12px;
+  --radius-tag:    6px;
+
+  /* Shadows */
+  --shadow-header:     0 2px 10px rgba(26, 35, 126, 0.08);
+  --shadow-card-hover: 0 4px 16px rgba(26, 35, 126, 0.10);
+  --shadow-focus:      0 0 0 3px rgba(57, 73, 171, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-stack);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--app-bg);
+  /* Offset the fixed 70px header so pages are never hidden underneath it */
+  padding-top: 70px;
+}
+
+a { color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   5.2 Shared fixed header
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--text-light);
+  box-shadow: var(--shadow-header);
+  z-index: 100;
+}
+
+.header-inner {
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--primary);
+}
+
+.logo-row { display: flex; align-items: center; gap: 14px; }
+
+.header-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   5.3 / 5.4 Auth split-screen (login + signup share this layout)
+   -------------------------------------------------------------------------- */
+.auth-body { background: var(--surface); }
+
+.auth-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* 50/50 split */
+  min-height: calc(100vh - 70px);
+}
+
+/* Left: deep blue gradient branding panel */
+.auth-brand {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0d1b5e 0%, #1a237e 50%, #283593 100%);
+  color: #ffffff;
+}
+
+.auth-brand-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 460px;
+  padding: 48px 40px;
+}
+
+.badge-label {
+  display: inline-block;
+  padding: 6px 14px;
+  margin-bottom: 20px;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-tag);
+}
+
+.brand-title {
+  font-size: var(--fs-title);
+  font-weight: var(--fw-title);
+  margin-bottom: 14px;
+}
+
+.brand-description { color: rgba(255, 255, 255, 0.88); margin-bottom: 22px; }
+
+.brand-list { list-style: none; }
+
+.brand-list li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.brand-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0.65;
+}
+
+/* Semi-transparent white circle overlays (~7% opacity), partially off-panel */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  pointer-events: none;
+}
+.circle-1 { width: 340px; height: 340px; top: -120px; right: -110px; }
+.circle-2 { width: 280px; height: 280px; bottom: -100px; left: -80px; }
+.circle-3 { width: 140px; height: 140px; bottom: 130px; right: 70px; }
+
+/* Right: white form panel */
+.auth-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  background: var(--surface);
+}
+
+.auth-form-card { width: 100%; max-width: 400px; }
+
+.form-title {
+  font-size: var(--fs-form);
+  font-weight: var(--fw-form);
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.form-subtitle { color: var(--text-secondary); margin-bottom: 28px; }
+
+.form-group { margin-bottom: 18px; }
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  color: var(--text-secondary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+  font-family: inherit;
+  font-size: var(--fs-body);
+  color: var(--text-primary);
+  background: #f8f9ff;
+  border: 1.5px solid var(--text-light);
+  border-radius: var(--radius-input);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input::placeholder { color: var(--text-muted); }
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-focus);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 13px 16px;
+  font-family: inherit;
+  font-size: var(--fs-button);
+  font-weight: var(--fw-button);
+  color: #ffffff;
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-button);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover { background: var(--primary-light); }
+
+/* Error message area (failed login) — light red / red border / dark red text */
+.error-message {
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  font-size: var(--fs-body);
+  color: #b71c1c;
+  background: #fdecea;
+  border: 1px solid #f5c6cb;
+  border-radius: var(--radius-input);
+}
+
+.error-message[hidden],
+.field-error[hidden] { display: none; }
+
+/* Inline field error (password mismatch) */
+.field-error {
+  display: block;
+  margin-top: 6px;
+  font-size: var(--fs-label);
+  color: #b71c1c;
+}
+
+.form-alt {
+  margin-top: 22px;
+  text-align: center;
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+}
+
+.accent-link {
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.accent-link:hover { text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   5.5 Dashboard
+   -------------------------------------------------------------------------- */
+.dashboard-body { background: var(--app-bg); }
+
+/* Hero banner beneath the header */
+.hero-banner { background: linear-gradient(90deg, #1a237e 0%, #3949ab 100%); }
+
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 44px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-text h1 {
+  font-size: var(--fs-title);
+  font-weight: var(--fw-title);
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.hero-text p { color: rgba(255, 255, 255, 0.85); }
+
+.hero-user { display: flex; align-items: center; gap: 16px; }
+
+.hero-username {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Semi-transparent white logout button */
+.btn-logout {
+  padding: 9px 22px;
+  font-family: inherit;
+  font-size: var(--fs-button);
+  font-weight: var(--fw-button);
+  color: #ffffff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--radius-button);
+  transition: background 0.15s ease;
+}
+
+.btn-logout:hover { background: rgba(255, 255, 255, 0.22); }
+
+/* Centered content area */
+.dashboard-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 24px 64px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--text-light);
+  border-radius: var(--radius-card);
+  padding: 24px;
+}
+
+/* Mission card */
+.mission-card { margin-bottom: 40px; }
+
+.section-title {
+  font-size: var(--fs-section);
+  font-weight: var(--fw-section);
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.mission-card p { color: var(--text-secondary); }
+
+/* Vulnerability grid */
+.vulnerabilities { margin-bottom: 44px; }
+
+.vuln-section-header {
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.vuln-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.vuln-card { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+
+.vuln-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* Colored pill tags */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-tag);
+}
+
+.tag-sqli    { color: #92400e; background: #fef3c7; border: 1px solid #fcd34d; }
+.tag-xss     { color: #991b1b; background: #fee2e2; border: 1px solid #fca5a5; }
+.tag-session { color: #6b21a8; background: #f3e8ff; border: 1px solid #d8b4fe; }
+.tag-brute   { color: #9a3412; background: #ffedd5; border: 1px solid #fdba74; }
+.tag-crypto  { color: #166534; background: #dcfce7; border: 1px solid #86efac; }
+.tag-exposed { color: #1e40af; background: #dbeafe; border: 1px solid #93c5fd; }
+.tag-csrf    { color: #9d174d; background: #fce7f3; border: 1px solid #f9a8d4; }
+
+.card-title {
+  font-size: var(--fs-card);
+  font-weight: var(--fw-card);
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.vuln-card p { color: var(--text-secondary); }
+
+/* Process step cards */
+.process-steps { display: flex; gap: 20px; }
+
+.step-card {
+  flex: 1;
+  padding: 28px 22px;
+  text-align: center;
+  color: #ffffff;
+  background: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius-card);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.step-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.step-card p { font-size: var(--fs-body); color: rgba(255, 255, 255, 0.88); }
+
+/* --------------------------------------------------------------------------
+   Search page (light reuse of design tokens)
+   -------------------------------------------------------------------------- */
+.search-page { max-width: 720px; margin: 48px auto; padding: 0 24px; }
+.search-page h2 { font-size: var(--fs-section); font-weight: var(--fw-section); margin-bottom: 16px; }
+.search-results { margin: 0 0 16px 20px; }
+.search-results li { margin-bottom: 6px; }
+
+/* --------------------------------------------------------------------------
+   5.6 Responsive behavior
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Auth split stacks vertically */
+  .auth-split { grid-template-columns: 1fr; }
+
+  /* Header logos shrink */
+  .header-logo { width: 40px; height: 40px; }
+  .logo-row { gap: 8px; }
+  .app-title { font-size: 0.95rem; }
+
+  /* Hero stacks */
+  .hero-inner { flex-direction: column; align-items: flex-start; }
+
+  /* Dashboard grid → single column */
+  .vuln-grid { grid-template-columns: 1fr; }
+
+  /* Process steps → vertical */
+  .process-steps { flex-direction: column; }
+}

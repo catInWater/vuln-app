@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Security Vulnerability Lab</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="dashboard-body">
+
+  <!-- Shared header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="app-title">Security Vulnerability Lab</span>
+      <nav class="logo-row">
+        <img class="header-logo" src="/static/images/PUCIT_Logo.png" alt="PUCIT">
+        <img class="header-logo" src="/static/images/blue-logo-scl2.png" alt="FCCU">
+        <img class="header-logo" src="/static/images/excaliat-logo.png" alt="Excaliat">
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero banner -->
+  <section class="hero-banner">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>Security Vulnerability Lab</h1>
+        <p>Hands-on training for OWASP Top 10 exploitation and defense.</p>
+      </div>
+      <div class="hero-user">
+        <span class="hero-username">Logged in as {{username}}</span>
+        <a class="btn-logout" href="/logout">Logout</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="dashboard-content">
+    <!-- Mission card -->
+    <section class="card mission-card">
+      <h2 class="section-title">Mission Statement</h2>
+      <p>
+        This laboratory provides a deliberately insecure web application to teach
+        real-world security vulnerabilities through direct, hands-on exploitation.
+        Learn how attacks work, why they happen, and how to defend against them.
+      </p>
+    </section>
+
+    <!-- Vulnerability grid -->
+    <section class="vulnerabilities">
+      <header class="vuln-section-header">Vulnerabilities to Discover</header>
+      <div class="vuln-grid">
+
+        <article class="card vuln-card">
+          <span class="tag tag-sqli">SQLi</span>
+          <h3 class="card-title">SQL Injection</h3>
+          <p>Inject SQL through form inputs to manipulate the underlying database queries.</p>
+        </article>
+
+        <article class="card vuln-card">
+          <span class="tag tag-xss">XSS</span>
+          <h3 class="card-title">Stored XSS</h3>
+          <p>Malicious scripts stored in the database execute for anyone who views the page.</p>
+        </article>
+
+        <article class="card vuln-card">
+          <span class="tag tag-xss">XSS</span>
+          <h3 class="card-title">Reflected XSS</h3>
+          <p>Scripts reflected back from URL parameters execute immediately in the browser.</p>
+        </article>
+
+        <article class="card vuln-card">
+          <span class="tag tag-session">Session</span>
+          <h3 class="card-title">Session Hijacking</h3>
+          <p>Weak session secrets let you forge or steal another user's session cookie.</p>
+        </article>
+
+        <article class="card vuln-card">
+          <span class="tag tag-brute">Brute</span>
+          <h3 class="card-title">No Rate Limiting</h3>
+          <p>Unlimited login attempts make credential guessing and brute force trivial.</p>
+        </article>
+
+        <article class="card vuln-card">
+          <span class="tag tag-crypto">Crypto</span>
+          <h3 class="card-title">Weak Password Storage</h3>
+          <p>Passwords hashed with unsalted MD5 can be reversed with rainbow tables.</p>
+        </article>
+
+        <article class="card vuln-card">
+          <span class="tag tag-exposed">Exposed</span>
+          <h3 class="card-title">Exposed Database</h3>
+          <p>The database file is downloadable without any authentication at all.</p>
+        </article>
+
+        <article class="card vuln-card">
+          <span class="tag tag-csrf">CSRF</span>
+          <h3 class="card-title">CSRF</h3>
+          <p>Form submissions carry no tokens, allowing cross-site request forgery.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Process steps -->
+    <section class="process-steps">
+      <div class="step-card">
+        <span class="step-number">1</span>
+        <h3>Find</h3>
+        <p>Locate vulnerabilities in the source code and application behavior.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">2</span>
+        <h3>Exploit</h3>
+        <p>Attack them with real penetration-testing techniques.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">3</span>
+        <h3>Mitigate</h3>
+        <p>Understand the root cause and apply correct, secure fixes.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
