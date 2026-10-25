@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vuln-app-backend"
-version = "0.1.0"
+version = "0.1.1"
 description = "Intentionally vulnerable web application for security education. Lab only - never deploy."
 requires-python = ">=3.9"
 dependencies = [
